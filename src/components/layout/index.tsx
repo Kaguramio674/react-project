@@ -9,7 +9,7 @@ import { DownOutlined } from '@ant-design/icons';
 import Head from 'next/head';
 import { Inter } from 'next/font/google';
 
-const { Header, Content, Sider } = AntdLayout;
+const { Header, Content, Footer } = AntdLayout;
 const inter = Inter({ subsets: ['latin'] });
 
 const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
@@ -39,16 +39,8 @@ const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOu
 const ITEMS = [
     {
         //icon: React.createElement(icon),
-        label: "图书",
+        label: "Recipe",
         key: "book",
-
-        children: [{
-            label: "图书一览",
-            key: "/book"
-        }, {
-            label: "图书添加",
-            key: "/book/add"
-        }]
     },
     {
         //icon: React.createElement(icon),
@@ -123,7 +115,7 @@ const user_items: MenuProps['items'] = [
 ];
 
 
-export function Layout({ children }:{children:ReactNode}) {
+export function Layout({ children }: { children: ReactNode }) {
     const router = useRouter();
     const MenuClick: MenuProps["onClick"] = ({ key }) => {
         router.push(key);
@@ -138,34 +130,44 @@ export function Layout({ children }:{children:ReactNode}) {
             </Head>
             <main>
                 <AntdLayout className={styles.sectionInner}>
-                    <Header className={styles.header}>
-                        <Image src="/logo.jpg" width={20} height={20} alt="logo" className={styles.logo} />
-                        test logo
-                        <span className={styles.user}>
-                            <Dropdown menu={{ items: user_items }}>
-
-                                <a onClick={(e) => e.preventDefault()}><Space>User <DownOutlined /> </Space>  </a>
-
-                            </Dropdown>
-                        </span>
-
-                    </Header>
                     <AntdLayout>
-                        <Sider width={200}>
+                        <Header
+                            style={{
+                                position: 'sticky',
+                                top: 0,
+                                zIndex: 1,
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <Image src="/logo.jpg" width={20} height={20} alt="logo" className={styles.logo} />
+                                <span className={styles.logoFont}>test logo</span>
+                            </div>
                             <Menu
-                                mode="inline"
-                                defaultSelectedKeys={['/book']}
-                                defaultOpenKeys={['sub1']}
-                                style={{ height: '100%', borderRight: 0 }}
+                                theme="dark"
+                                mode="horizontal"
+                                defaultSelectedKeys={['2']}
                                 items={ITEMS}
-                                onClick={MenuClick}
+                                style={{ flex: 1, minWidth: 0 }}
                             />
-                        </Sider>
-                        <AntdLayout className = {styles.sectionContent}>
-                            <Content className = {styles.content}>
+                            <span className={styles.user}>
+                                <Dropdown menu={{ items: user_items }}>
+                                    <a onClick={(e) => e.preventDefault()}>
+                                        <Space>User <DownOutlined /></Space>
+                                    </a>
+                                </Dropdown>
+                            </span>
+                        </Header>
+                        <AntdLayout className={styles.sectionContent}>
+                            <Content className={styles.content}>
                                 {children}
                             </Content>
                         </AntdLayout>
+                        <Footer style={{ textAlign: 'center' }}>
+                            Created by KaguraMio
+                        </Footer>
                     </AntdLayout>
                 </AntdLayout>
             </main>

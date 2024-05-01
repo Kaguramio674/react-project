@@ -3,6 +3,9 @@
     margin-top: -2px;
 
 }
+.logoFont{
+    color: #4b7bd7;
+}
 .header{
     background-color: #fff;
     font-size: 12px;
@@ -18,13 +21,12 @@
 }
 .sectionContent{
  padding:32px;
+ overflow-x: auto;
 }
-.content{
- background-color: #fff;
- border-radius: 18px;
- padding: 24px;
-
-}
-.sectionInner{
-    height: calc(100vh);
-}
+.content {
+    background-color: #fff;
+    border-radius: 18px;
+    padding: 24px;
+    width: 70%;
+    margin: 0 auto;
+  }
