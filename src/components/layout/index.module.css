@@ -6,13 +6,15 @@
 .logoFont{
     color: #4b7bd7;
 }
-.header{
-    background-color: #fff;
-    font-size: 12px;
-    color: #4b7bd7;
-    font-weight: bold;
-    margin-right: 8px;
-}
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 .user{
     float:right;
     font-weight: normal;
@@ -29,4 +31,18 @@
     padding: 24px;
     width: 70%;
     margin: 0 auto;
+  }
+.sectionInner {
+    height: calc(100vh);
+  }
+
+  .menu :global(.ant-menu-item),
+  .menu :global(.ant-menu-submenu-title) {
+    width: 150px;
+    text-align: center;
+  }
+  
+  .menu :global(.ant-menu-submenu-title) {
+    display: flex;
+    justify-content: center;
   }
