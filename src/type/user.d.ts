@@ -5,8 +5,8 @@ export interface UserType{
     identity: string;
     createdAt?: Date;
     password: string;
-    liked?: string;
-    stared?:string;
+    liked: string;
+    stared:string;
 }
 export interface LoginResponse {
     success: boolean;

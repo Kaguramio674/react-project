@@ -1,48 +1,55 @@
-.logo{
-    margin-right: 8px;
-    margin-top: -2px;
+.logo {
+  margin-right: 8px;
+  margin-top: -2px;
 
 }
-.logoFont{
-    color: #4b7bd7;
+
+.logoFont {
+  color: #4b7bd7;
 }
+
 .header {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-.user{
-    float:right;
-    font-weight: normal;
-    font-size: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user {
+  float: right;
+  font-weight: normal;
+  font-size: 12px;
 
 }
-.sectionContent{
- padding:32px;
- overflow-x: auto;
+
+.sectionContent {
+  padding: 32px;
+  overflow-x: auto;
 }
+
 .content {
-    background-color: #fff;
-    border-radius: 18px;
-    padding: 24px;
-    width: 70%;
-    margin: 0 auto;
-  }
-.sectionInner {
-    height: calc(100vh);
-  }
+  overflow: auto;
+  background-color: #fff;
+  border-radius: 18px;
+  padding: 24px;
+  width: 70%;
+  margin: 0 auto;
+}
 
-  .menu :global(.ant-menu-item),
-  .menu :global(.ant-menu-submenu-title) {
-    width: 150px;
-    text-align: center;
-  }
-  
-  .menu :global(.ant-menu-submenu-title) {
-    display: flex;
-    justify-content: center;
-  }
+.sectionInner {
+  height: calc(100vh);
+}
+
+.menu :global(.ant-menu-item),
+.menu :global(.ant-menu-submenu-title) {
+  width: 150px;
+  text-align: center;
+}
+
+.menu :global(.ant-menu-submenu-title) {
+  display: flex;
+  justify-content: center;
+}

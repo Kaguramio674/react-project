@@ -1,11 +1,11 @@
-import { Button, Col, Form, Input, Row, Select, Card, Avatar, Pagination, Layout, Checkbox, CheckboxProps, Divider, GetProp, Typography } from "antd";
+import { Button, Col, Form, Input, Row, Select, Card, Avatar, Pagination, Layout, Checkbox, CheckboxProps, Divider, GetProp, Typography, ConfigProvider } from "antd";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styles from './index.module.css'
 import { getRecipeList } from "@/api/recipe";
 import { RecipeQueryType } from "@/type";
 import { SearchOutlined, StarOutlined, LikeOutlined } from '@ant-design/icons';
-
+import { TinyColor } from '@ctrl/tinycolor';
 //import { CheckboxValueType } from "antd/es/checkbox/Group";
 
 const { Meta } = Card;
@@ -15,6 +15,16 @@ type CheckboxValueType = GetProp<typeof Checkbox.Group, 'value'>[number];
 const CheckboxGroup = Checkbox.Group;
 const plainOptions = ['Alcohol-free', 'Light(1~10%)', 'Medium(11~19%)', 'Strong(20~40%)'];
 const defaultCheckedList = ['Alcohol-free', 'Light(1~10%)', 'Medium(11~19%)', 'Strong(20~40%)'];
+
+ //button color
+ const colors3 = ['#40e495', '#30dd8a', '#2bb673'];
+ const getHoverColors = (colors: string[]) =>
+   colors.map((color) => new TinyColor(color).lighten(5).toString());
+ const getActiveColors = (colors: string[]) =>
+   colors.map((color) => new TinyColor(color).darken(5).toString());
+ 
+ 
+
 
 export default function Home() {
   const [form] = Form.useForm();
@@ -84,12 +94,16 @@ export default function Home() {
     setCheckedList(e.target.checked ? plainOptions : []);
   };
 
-  const [baseValue, setBaseValue] = useState<string[]>([]);
+  const [spiritValue, setSpiritValue] = useState<string[]>([]);
   const onFormValuesChange = (changedValues: any, allValues: any) => {
-    if (changedValues.base) {
-      setBaseValue(changedValues.base);
+    if (changedValues.spirit) {
+      setSpiritValue(changedValues.spirit);
     }
   };
+  const handelClick = () => {
+    router.push('/recipe/add')
+  }
+
 
   return (
     <Layout>
@@ -110,29 +124,29 @@ export default function Home() {
           <Form.Item name="name" label="Name">
             <Input placeholder="Name" allowClear />
           </Form.Item>
-          <Form.Item name="base" label="Base" initialValue={[]}>
+          <Form.Item name="spirit" label="spirit" initialValue={[]}>
             <Row gutter={[16, 16]}>
-              {['Gin', 'Whisky', 'Brandy', 'Vodka', 'Rum', 'Tequila'].map((base) => (
-                <Col key={base} span={8}>
+              {['Gin', 'Whisky', 'Brandy', 'Vodka', 'Rum', 'Tequila'].map((spirit) => (
+                <Col key={spirit} span={8}>
                   <Card
                     hoverable
                     cover={
                       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', height: 150 }}>
-                        <img alt={base}
-                          src={`/recipes/base/${base.toLowerCase()}.jpg`}
+                        <img alt={spirit}
+                          src={`/recipes/base/${spirit.toLowerCase()}.jpg`}
                           style={{ maxWidth: '100%', maxHeight: '100%' }} />
                       </div>
                     }
                     bodyStyle={{ padding: '8px', marginTop: '-30px' }}
                     onClick={() => {
-                      const newBaseValue = baseValue.includes(base)
-                        ? baseValue.filter((item) => item !== base)
-                        : [...baseValue, base];
-                      setBaseValue(newBaseValue);
-                      form.setFieldsValue({ base: newBaseValue });
+                      const newSpiritValue = spiritValue.includes(spirit)
+                        ? spiritValue.filter((item) => item !== spirit)
+                        : [...spiritValue, spirit];
+                      setSpiritValue(newSpiritValue);
+                      form.setFieldsValue({ spirit: newSpiritValue });
                     }}
                     style={{
-                      border: baseValue.includes(base)
+                      border: spiritValue.includes(spirit)
                         ? '2px solid #1890ff'
                         : '1px solid #d9d9d9'
                     }}
@@ -149,7 +163,7 @@ export default function Home() {
                             textAlign: 'center',
                           }}
                         >
-                          {base}
+                          {spirit}
                         </Typography.Text>
                       }
                     />
@@ -173,6 +187,29 @@ export default function Home() {
               Clear
             </Button>
           </Form.Item>
+          <Form.Item style={{ textAlign: 'center' }} >
+          <b>Can not find what you want?</b>
+          <ConfigProvider
+      theme={{
+        components: {
+          Button: {
+            colorPrimary: `linear-gradient(116deg,  ${colors3.join(', ')})`,
+            colorPrimaryHover: `linear-gradient(116deg, ${getHoverColors(
+              colors3
+            ).join(', ')})`,
+            colorPrimaryActive: `linear-gradient(116deg, ${getActiveColors(
+              colors3
+            ).join(', ')})`,
+            lineWidth: 0,
+          },
+        },
+      }}
+    >
+      <Button type="primary" size="large" onClick = {handelClick}>
+         Creat your own recipe!
+      </Button>
+    </ConfigProvider>
+            </Form.Item>
         </Form>
       </Sider>
       <Content>
@@ -180,7 +217,7 @@ export default function Home() {
           Sort by : &nbsp;
           <Select value={sortBy} onChange={(value) => setSortBy(value)} style={{ width: 120 }}>
             <Select.Option value="default">Default</Select.Option>
-            <Select.Option value="createdAt">Created At</Select.Option>
+            <Select.Option value="createdAt">Created Time</Select.Option>
             <Select.Option value="likeCount">Likes</Select.Option>
             <Select.Option value="starCount">Stars</Select.Option>
           </Select>
@@ -191,8 +228,8 @@ export default function Home() {
               <Col key={item.id} xs={24} sm={12} md={8}>
                 <Card
                   hoverable
-                  style={{}}
-                  cover={<img alt={item.name} src={item.cover} />}
+                  style={{ textAlign: 'center' }}
+                  cover={<img alt={item.name} src={item.imageUrl} style={{width: '120px', height: 'auto', maxHeight: '150px', margin: '0 auto'  }}/>}
                   actions={[
                     <span key="like">
                       <LikeOutlined /> <b style={{ color: 'red' }}>{item.likeCount}</b>
@@ -201,15 +238,16 @@ export default function Home() {
                       <StarOutlined /> <b style={{ color: 'orange' }}>{item.starCount}</b>
                     </span>,
                   ]}
-                  onClick={() => router.push(`/recipe/${item.id}`)} // 添加点击事件
+                  onClick={() => router.push(`/recipe/${item.id}`)}
                 >
                   <Meta
-                    title={item.title}
+                    title={item.name}
                     description={
-                      item.description.length > descriptionLength
-                        ? `${item.description.slice(0, descriptionLength)}...`
-                        : item.description
+                      item.alcohol
                     }
+                  />
+                  <Meta
+                    description={!item.spirit||item.spirit.length===0?item.basic:item.spirit}
                   />
                 </Card>
               </Col>

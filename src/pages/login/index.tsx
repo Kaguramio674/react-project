@@ -4,7 +4,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { request } from 'http';
 import { login } from '@/api/user';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/components/AuthContext';
 
 interface FormValues {
   username: string;
@@ -15,14 +15,16 @@ const LoginForm: React.FC = () => {
   const router = useRouter();
   const [form] = Form.useForm();
 
-  const { login: loginContext } = useAuth(); // 重命名为 loginContext 以避免与 user.ts 中的 login 函数冲突
+  const { login: loginContext } = useAuth(); 
 
   const onFinish = async (values: FormValues) => {
     try {
       const res = await login(values);
       if (res.success) {
         message.success("Login success!");
-        loginContext();
+        if (res.user) {
+          loginContext(res.user);
+        }
         router.push("/recipe");
       } else {
         message.error(res.message || "Invalid username or password");

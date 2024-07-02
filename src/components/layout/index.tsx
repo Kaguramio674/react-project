@@ -11,7 +11,7 @@ import { Inter } from 'next/font/google';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/components/AuthContext';
 
 const { Header, Content, Footer } = AntdLayout;
 const inter = Inter({ subsets: ['latin'] });
@@ -44,7 +44,7 @@ const ITEMS = [
     {
         //icon: React.createElement(icon),
         label: "Home",
-        key: "/",
+        key: "",
     },
     {
         //icon: React.createElement(icon),
@@ -60,31 +60,12 @@ const ITEMS = [
 ]
 
 const user_items: MenuProps['items'] = [
-    {
-        key: '1',
-        label: "My Page",
-    },
+    // {
+    //     key: '1',
+    //     label: "My Page",
+    // },
     {
         key: '2',
-        label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-                2nd menu item (disabled)
-            </a>
-        ),
-        //icon: <SmileOutlined />,
-        disabled: true,
-    },
-    {
-        key: '3',
-        label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-                3rd menu item (disabled)
-            </a>
-        ),
-        disabled: true,
-    },
-    {
-        key: '4',
         danger: true,
         label: 'Logout',
     },
@@ -94,12 +75,12 @@ const user_items: MenuProps['items'] = [
 export function Layout({ children }: { children: ReactNode }) {
     const router = useRouter();
     const MenuClick: MenuProps["onClick"] = ({ key }) => {
-        router.push(key);
+      router.push(`/${key}`);
     }
     const { isLoggedIn, logout } = useAuth();
 
     const onUserMenuClick: MenuProps["onClick"] = ({ key }) => {
-        if (key === '4') {
+        if (key === '2') {
           logout();
         }
       };

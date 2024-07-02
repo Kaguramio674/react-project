@@ -15,7 +15,7 @@ interface AxiosInstanceType extends AxiosInstance {
 
 export const CreateAxiosInstance = (config?: AxiosRequestConfig): AxiosInstanceType => {
   const instance = axios.create({
-    timeout: 5000,
+    timeout: 20000,
     ...config,
   });
 

@@ -1,5 +1,5 @@
 import { Layout } from "@/components/layout";
-import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthProvider } from "@/components/AuthContext";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 
