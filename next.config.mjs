@@ -10,5 +10,6 @@ const nextConfig = {
     }]
   }
 }
-
+//添加日志
+console.log('API_URL:', process.env.NEXT_PUBLIC_API_URL);
 export default nextConfig;
