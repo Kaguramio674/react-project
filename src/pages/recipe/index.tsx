@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import styles from './index.module.css'
 import { getRecipeList } from "@/api/recipe";
 import { RecipeQueryType } from "@/type";
-import { SearchOutlined, StarOutlined, LikeOutlined } from '@ant-design/icons';
+import { SearchOutlined, StarOutlined, StarFilled, LikeOutlined, LikeFilled } from '@ant-design/icons';
 import { TinyColor } from '@ctrl/tinycolor';
 //import { CheckboxValueType } from "antd/es/checkbox/Group";
+import { useAuth } from '@/components/AuthContext';
 
 const { Meta } = Card;
 const { Sider, Content } = Layout;
@@ -36,6 +37,8 @@ export default function Home() {
     total: 0
   })
   const [sortBy, setSortBy] = useState('default');
+  const { isLoggedIn, user } = useAuth();
+
 
   useEffect(() => {
     async function fetchData() {
@@ -44,7 +47,6 @@ export default function Home() {
       setPagination({ ...pagination, total: res.total });
     }
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagination.current, pagination.pageSize, sortBy]);
 
   const handelSearchFinish = async (values: RecipeQueryType) => {
@@ -104,6 +106,14 @@ export default function Home() {
     router.push('/recipe/add')
   }
 
+  // 判断用户是否喜欢或收藏了某个食谱
+  const isRecipeLiked = (recipeId: string) => {
+    return user && user.liked ? user.liked.split(',').includes(recipeId) : false;
+  };
+
+  const isRecipeStarred = (recipeId: string) => {
+    return user && user.stared ? user.stared.split(',').includes(recipeId) : false;
+  };
 
   return (
     <Layout>
@@ -124,7 +134,7 @@ export default function Home() {
           <Form.Item name="name" label="Name">
             <Input placeholder="Name" allowClear />
           </Form.Item>
-          <Form.Item name="spirit" label="spirit" initialValue={[]}>
+          <Form.Item name="spirit" label="Spirit" initialValue={[]}>
             <Row gutter={[16, 16]}>
               {['Gin', 'Whisky', 'Brandy', 'Vodka', 'Rum', 'Tequila'].map((spirit) => (
                 <Col key={spirit} span={8}>
@@ -232,22 +242,28 @@ export default function Home() {
                   cover={<img alt={item.name} src={item.imageUrl} style={{width: '120px', height: 'auto', maxHeight: '150px', margin: '0 auto'  }}/>}
                   actions={[
                     <span key="like">
-                      <LikeOutlined /> <b style={{ color: 'red' }}>{item.likeCount}</b>
+                      {isRecipeLiked(item.id.toString()) ? (
+                        <LikeFilled style={{ color: 'red' }} />
+                      ) : (
+                        <LikeOutlined />
+                      )} <b style={{ color: 'red' }}>{item.likeCount}</b>
                     </span>,
                     <span key="star">
-                      <StarOutlined /> <b style={{ color: 'orange' }}>{item.starCount}</b>
+                      {isRecipeStarred(item.id.toString()) ? (
+                        <StarFilled style={{ color: 'orange' }} />
+                      ) : (
+                        <StarOutlined />
+                      )} <b style={{ color: 'orange' }}>{item.starCount}</b>
                     </span>,
                   ]}
                   onClick={() => router.push(`/recipe/${item.id}`)}
                 >
                   <Meta
                     title={item.name}
-                    description={
-                      item.alcohol
-                    }
+                    description={item.alcohol}
                   />
                   <Meta
-                    description={!item.spirit||item.spirit.length===0?item.basic:item.spirit}
+                    description={!item.spirit || item.spirit.length === 0 ? item.basic : item.spirit}
                   />
                 </Card>
               </Col>

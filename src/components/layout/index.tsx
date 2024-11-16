@@ -60,10 +60,10 @@ const ITEMS = [
 ]
 
 const user_items: MenuProps['items'] = [
-    // {
-    //     key: '1',
-    //     label: "My Page",
-    // },
+    {
+        key: '1',
+        label: "My Page",
+    },
     {
         key: '2',
         danger: true,
@@ -80,6 +80,9 @@ export function Layout({ children }: { children: ReactNode }) {
     const { isLoggedIn, logout } = useAuth();
 
     const onUserMenuClick: MenuProps["onClick"] = ({ key }) => {
+      if (key === '1') {
+        router.push(`/mypage`);
+      }
         if (key === '2') {
           logout();
         }

@@ -35,8 +35,8 @@ const RecipeDetail = () => {
         const data = await getRecipeById(Number(id));
         setRecipe(data);
 
-        setIsLiked(user.liked.split(',').includes(id as string));
-        setIsStared(user.stared.split(',').includes(id as string));
+        setIsLiked(user.liked ? user.liked.split(',').includes(id as string) : false);
+        setIsStared(user.stared ? user.stared.split(',').includes(id as string) : false);
       }
     };
     fetchRecipe();
@@ -54,14 +54,14 @@ const RecipeDetail = () => {
         await engagement(Number(id), 'remove', 'like', user.id);
         const updatedUser = {
           ...user,
-          liked: user.liked.split(',').filter(recipeId => recipeId !== id).join(','),
+          liked: user.liked ? user.liked.split(',').filter(recipeId => recipeId !== id).join(',') : '',
         };
         updateUser(updatedUser);
       } else {
         await engagement(Number(id), 'add', 'like', user.id);
         const updatedUser = {
           ...user,
-          liked: (user.liked ? `${user.liked},${id}` : id) as string,
+          liked: user.liked ? `${user.liked},${id}` : id as string,
         };
         updateUser(updatedUser);
       }
@@ -83,14 +83,14 @@ const RecipeDetail = () => {
         await engagement(Number(id), 'remove', 'star', user.id);
         const updatedUser = {
           ...user,
-          stared: user.stared.split(',').filter(recipeId => recipeId !== id).join(','),
+          stared: user.stared ? user.stared.split(',').filter(recipeId => recipeId !== id).join(',') : '',
         };
         updateUser(updatedUser);
       } else {
         await engagement(Number(id), 'add', 'star', user.id);
         const updatedUser = {
           ...user,
-          stared: (user.stared ? `${user.stared},${id}` : id) as string,
+          stared: user.stared ? `${user.stared},${id}` : id as string,
         };
         updateUser(updatedUser);
       }
@@ -161,7 +161,7 @@ const RecipeDetail = () => {
         </Button>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-        <Image src={imageUrl} alt={name} width={'50%'} />
+        <Image src={imageUrl} alt={name} width={300} />
       </div>
       <Title level={1} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{name}</Title>
       <Title level={4}>Ingredients</Title>
