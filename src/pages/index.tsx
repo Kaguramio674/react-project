@@ -73,7 +73,7 @@ export default function Home() {
         <Card
           hoverable
           style={{ width: 240 }}
-          cover={<img alt="Negroni" src="https://cocktail-react-project.s3.ap-northeast-1.amazonaws.com/public/recipe-img/1719859253770-Negroni.png" />}
+          cover={<img alt="Negroni" src="https://cocktail-react-project.s3.ap-northeast-1.amazonaws.com/public/recipe-img/1719859253770-Negroni.webp" />}
         >
           <Meta title="Negroni" />
         </Card>
@@ -83,7 +83,7 @@ export default function Home() {
         <Card
           hoverable
           style={{ width: 240 }}
-          cover={<img alt="Margarita" src="https://cocktail-react-project.s3.ap-northeast-1.amazonaws.com/public/recipe-img/1719855611007-margarita.jpeg" />}
+          cover={<img alt="Margarita" src="https://cocktail-react-project.s3.ap-northeast-1.amazonaws.com/public/recipe-img/1719855611007-margarita.webp" />}
         >
           <Meta title="Margarita" />
         </Card>
@@ -93,7 +93,7 @@ export default function Home() {
         <Card
           hoverable
           style={{ width: 240 }}
-          cover={<img alt="Random Choice" src="https://cocktail-react-project.s3.ap-northeast-1.amazonaws.com/public/recipe-img/1718202377235-default.png" />}
+          cover={<img alt="Random Choice" src="https://cocktail-react-project.s3.ap-northeast-1.amazonaws.com/public/recipe-img/1718202377235-default.webp" />}
         >
           <Meta title="Random Choice!" />
         </Card>
