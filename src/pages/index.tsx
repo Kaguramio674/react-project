@@ -42,7 +42,7 @@ export default function Home() {
             <div style={{
               width: '100%',
               height: '500px',
-              backgroundImage: 'url(https://cocktail-react-project.s3.ap-northeast-1.amazonaws.com/public/home/1719866680677-home0.jpg)',
+              backgroundImage: 'url(https://cocktail-react-project.s3.ap-northeast-1.amazonaws.com/public/home/1719866680677-home0.webp)',
               backgroundSize: 'cover',
               backgroundPosition: 'center'
             }} />
@@ -51,7 +51,7 @@ export default function Home() {
             <div style={{
               width: '100%',
               height: '500px',
-              backgroundImage: 'url(https://cocktail-react-project.s3.ap-northeast-1.amazonaws.com/public/home/1719866614485-home1.png)',
+              backgroundImage: 'url(https://cocktail-react-project.s3.ap-northeast-1.amazonaws.com/public/home/1719866614485-home1.webp)',
               backgroundSize: 'cover',
               backgroundPosition: 'center'
             }} />
@@ -60,7 +60,7 @@ export default function Home() {
             <div style={{
               width: '100%',
               height: '500px',
-              backgroundImage: 'url(https://cocktail-react-project.s3.ap-northeast-1.amazonaws.com/public/home/1719866617391-home2.png)',
+              backgroundImage: 'url(https://cocktail-react-project.s3.ap-northeast-1.amazonaws.com/public/home/1719866617391-home2.webp)',
               backgroundSize: 'cover',
               backgroundPosition: 'center'
             }} />
